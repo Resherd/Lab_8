@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pharmacy Database</title>
+    <style>
+        h1 {
+            font-size: 3em;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #4CAF50;
+        }
+        
+        h2 {
+            font-size: 2.5em;
+            color: #4CAF50;
+            margin-top: 40px;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        
+        .italic-text {
+            font-style: italic;
+            color: #555;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        th {
+            font-weight: bold;
+            background-color: #f2f2f2;
+            color: #333;
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        
+        td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+            background-color: #fff;
+        }
+        
+    </style>
+</head>
+<body>
+
+    <h1>Pharmacy Database</h1>
+
+    <p class="italic-text">Name, Kapinus Bohdan ,  Group: KN-21002B</p>
+
+    <h2>Medicines Table</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Registration Number</th>
+                <th>Name</th>
+                <th>Manufacture Date</th>
+                <th>Shelf Life (Days)</th>
+                <th>Group Name</th>
+                <th>Price</th>
+                <th>Prescription Required</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for medicine in medicines %}
+            <tr>
+                <td>{{ medicine.registration_number }}</td>
+                <td>{{ medicine.name }}</td>
+                <td>{{ medicine.manufacture_date }}</td>
+                <td>{{ medicine.shelf_life_days }}</td>
+                <td>{{ medicine.group_name }}</td>
+                <td>{{ medicine.price }}</td>
+                <td>{{ 'Yes' if medicine.prescription_required else 'No' }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Suppliers Table</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Supplier Code</th>
+                <th>Supplier Name</th>
+                <th>Address</th>
+                <th>Phone</th>
+                <th>Contact Person</th>
+                <th>Location</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for supplier in suppliers %}
+            <tr>
+                <td>{{ supplier.supplier_code }}</td>
+                <td>{{ supplier.supplier_name }}</td>
+                <td>{{ supplier.address }}</td>
+                <td>{{ supplier.phone }}</td>
+                <td>{{ supplier.contact_person }}</td>
+                <td>{{ supplier.location }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Deliveries Table</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Delivery ID</th>
+                <th>Delivery Date</th>
+                <th>Medicine Registration Number</th>
+                <th>Quantity</th>
+                <th>Supplier Code</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for delivery in deliveries %}
+            <tr>
+                <td>{{ delivery.delivery_id }}</td>
+                <td>{{ delivery.delivery_date }}</td>
+                <td>{{ delivery.medicine_registration_number }}</td>
+                <td>{{ delivery.quantity }}</td>
+                <td>{{ delivery.supplier_code }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+</html>

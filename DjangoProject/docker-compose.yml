@@ -1,0 +1,58 @@
+services:
+  postgres:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: pharmacy
+    ports:
+      - "5432:5432"
+    networks:
+      - dem
+    volumes:
+      - ./init_db.sql:/docker-entrypoint-initdb.d/init_db.sql
+      - postgres_data:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "admin@ua.com"
+      PGADMIN_DEFAULT_PASSWORD: "admin"
+    ports:
+      - "8080:80"
+    depends_on:
+      - postgres
+    networks:
+      - dem
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile  
+    volumes:
+      - .:/app  
+    depends_on:
+      - postgres
+    networks:
+      - dem
+
+  web:
+    build: . 
+    ports:
+      - "8001:8001"
+    command: python manage.py runserver 0.0.0.0:8001  
+    volumes:
+      - .:/code
+    depends_on:
+      - postgres
+    networks:
+      - dem
+
+networks:
+  dem:
+    driver: bridge
+
+volumes:
+  postgres_data:
